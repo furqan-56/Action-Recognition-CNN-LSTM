@@ -1,6 +1,6 @@
-# 🎬 VideoMotion AI - Human Activity Recognition System
+# 🎬 Human Activity Recognition System
 
-> **An intelligent deep learning solution for real-time video-based human action classification powered by hybrid CNN-LSTM architecture**
+> **An intelligent deep learning solution for video-based human action classification using hybrid CNN-LSTM architecture**
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.10%2B-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://tensorflow.org)
@@ -26,7 +26,7 @@
 
 ## 🎯 Overview
 
-**VideoMotion AI** is a sophisticated video analytics solution that leverages the power of convolutional neural networks combined with recurrent architectures to understand and classify human activities in video sequences. The system processes temporal information across multiple frames, enabling accurate recognition of complex motion patterns.
+This **Human Activity Recognition System** is a sophisticated deep learning solution that leverages convolutional neural networks combined with LSTM recurrent architectures to understand and classify human activities in video sequences. The system processes temporal information across multiple frames, enabling accurate recognition of complex motion patterns and human actions.
 
 ### Why This Approach?
 
@@ -190,7 +190,7 @@ python app.py
 You should see:
 ```
 ╔══════════════════════════════════════════════════════════════╗
-║          VideoMotion AI - Activity Recognition API           ║
+║      Human Activity Recognition - REST API Server           ║
 ╠══════════════════════════════════════════════════════════════╣
 ║  Status     : Active                                         ║
 ║  Endpoint   : http://127.0.0.1:5000                         ║
@@ -223,7 +223,7 @@ Returns server status and available endpoints.
 ```json
 {
     "status": "operational",
-    "service": "VideoMotion AI",
+    "service": "Human Activity Recognition API",
     "model_info": {
         "architecture": "CNN-LSTM Hybrid",
         "categories": 11
@@ -363,7 +363,7 @@ This project is developed for educational purposes as part of a Deep Learning co
 
 **Built with ❤️ using TensorFlow & Flask**
 
-*Deep Learning Assignment - Activity Recognition System*
+*Deep Learning Assignment - Human Activity Recognition using CNN-LSTM*
 
 </div>
 
