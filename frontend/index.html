@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VideoMotion AI - Intelligent human activity recognition using deep learning">
+    <meta name="author" content="Deep Learning Assignment">
+    
+    <title>VideoMotion AI | Activity Recognition</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon (optional) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- NAVIGATION HEADER                                               -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <nav class="nav-header">
+            <div class="nav-brand">
+                <span class="brand-icon">🎬</span>
+                <span class="brand-text">Action Recognition</span>
+            </div>
+            <div class="nav-status">
+                <span class="status-indicator" id="serverStatus"></span>
+                <span class="status-text">Checking API...</span>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- HERO SECTION                                                    -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <header class="hero-section">
+            <div class="hero-badge">Deep Learning Powered</div>
+            <h1 class="hero-title">
+                Intelligent <span class="gradient-text">Action Recognition</span>
+            </h1>
+            <p class="hero-subtitle">
+                Harness the power of CNN-LSTM neural networks to analyze and classify 
+                human activities in video content with remarkable accuracy
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-value">11</span>
+                    <span class="stat-label">Activity Classes</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value">20</span>
+                    <span class="stat-label">Frame Analysis</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value">224²</span>
+                    <span class="stat-label">Resolution</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- MAIN APPLICATION AREA                                           -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <main class="main-app">
+            <!-- Upload Card -->
+            <section class="card upload-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="title-icon">📤</span>
+                        Upload Video
+                    </h2>
+                    <p class="card-description">Select or drag a video file to analyze</p>
+                </div>
+                
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-zone-content">
+                        <div class="upload-icon-wrapper">
+                            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                            </svg>
+                        </div>
+                        <h3 class="upload-title">Drop your video here</h3>
+                        <p class="upload-hint">or click to browse files</p>
+                        <input type="file" id="videoFileInput" accept="video/*" hidden>
+                        <button class="btn btn-outline" id="browseFilesBtn">
+                            <span>Browse Files</span>
+                        </button>
+                    </div>
+                    <div class="upload-formats">
+                        <span class="format-tag">MP4</span>
+                        <span class="format-tag">AVI</span>
+                        <span class="format-tag">MOV</span>
+                        <span class="format-tag">MKV</span>
+                        <span class="format-tag">WebM</span>
+                    </div>
+                </div>
+
+                <!-- File Preview (Hidden by default) -->
+                <div class="file-preview-container" id="filePreviewContainer" style="display: none;">
+                    <div class="preview-header">
+                        <div class="preview-info">
+                            <span class="preview-icon">🎥</span>
+                            <div class="preview-details">
+                                <span class="preview-filename" id="previewFilename"></span>
+                                <span class="preview-filesize" id="previewFilesize"></span>
+                            </div>
+                        </div>
+                        <button class="btn-icon btn-remove" id="removeFileBtn" title="Remove file">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <video id="videoPreviewPlayer" controls></video>
+                </div>
+
+                <!-- Analysis Button -->
+                <button class="btn btn-primary btn-analyze" id="analyzeBtn" disabled>
+                    <span class="btn-content">
+                        <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <span>Analyze Activity</span>
+                    </span>
+                    <span class="btn-loading">
+                        <span class="loading-spinner"></span>
+                        <span>Processing Video...</span>
+                    </span>
+                </button>
+            </section>
+
+            <!-- Results Card (Hidden by default) -->
+            <section class="card results-card" id="resultsCard" style="display: none;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="title-icon">🎯</span>
+                        Analysis Results
+                    </h2>
+                </div>
+                
+                <!-- Primary Prediction -->
+                <div class="prediction-hero">
+                    <div class="prediction-label">Detected Activity</div>
+                    <div class="prediction-activity" id="detectedActivity"></div>
+                    <div class="confidence-display">
+                        <span class="confidence-label">Confidence Score</span>
+                        <span class="confidence-percentage" id="confidencePercentage"></span>
+                    </div>
+                    <div class="confidence-track">
+                        <div class="confidence-progress" id="confidenceProgress"></div>
+                    </div>
+                </div>
+
+                <!-- Probability Distribution -->
+                <div class="distribution-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📊</span>
+                        Probability Distribution
+                    </h3>
+                    <div class="probability-list" id="probabilityList"></div>
+                </div>
+            </section>
+
+            <!-- Error Card (Hidden by default) -->
+            <section class="card error-card" id="errorCard" style="display: none;">
+                <div class="error-content">
+                    <div class="error-icon">⚠️</div>
+                    <h3 class="error-title">Analysis Failed</h3>
+                    <p class="error-message" id="errorMessage"></p>
+                    <button class="btn btn-secondary" id="retryBtn">Try Again</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- MODEL INFORMATION SECTION                                       -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section class="info-section">
+            <h2 class="info-section-title">
+                <span class="section-icon">🧠</span>
+                Model Architecture
+            </h2>
+            
+            <div class="architecture-flow">
+                <div class="flow-step">
+                    <div class="step-icon">📹</div>
+                    <div class="step-content">
+                        <h4>Video Input</h4>
+                        <p>20 frames @ 224×224</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🔍</div>
+                    <div class="step-content">
+                        <h4>MobileNetV2</h4>
+                        <p>Spatial Features</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🔄</div>
+                    <div class="step-content">
+                        <h4>LSTM (64)</h4>
+                        <p>Temporal Learning</p>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-icon">🎯</div>
+                    <div class="step-content">
+                        <h4>Classification</h4>
+                        <p>11 Categories</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="categories-grid">
+                <h3 class="categories-title">Recognizable Activities</h3>
+                <div class="category-tags" id="categoryTags">
+                    <span class="category-tag">🏀 Basketball</span>
+                    <span class="category-tag">🚴 Biking</span>
+                    <span class="category-tag">🏊 Diving</span>
+                    <span class="category-tag">⛳ Golf Swing</span>
+                    <span class="category-tag">🐴 Horse Riding</span>
+                    <span class="category-tag">⚽ Soccer Juggling</span>
+                    <span class="category-tag">🎪 Swing</span>
+                    <span class="category-tag">🎾 Tennis Swing</span>
+                    <span class="category-tag">🤸 Trampoline</span>
+                    <span class="category-tag">🏐 Volleyball</span>
+                    <span class="category-tag">🚶 Walking</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- FOOTER                                                          -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p class="footer-title">Deep Learning Assignment</p>
+                <p class="footer-subtitle">Human Activity Recognition using CNN-LSTM Architecture</p>
+            </div>
+            <div class="footer-tech">
+                <span class="tech-badge">TensorFlow</span>
+                <span class="tech-badge">Flask</span>
+                <span class="tech-badge">UCF11</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+</html>

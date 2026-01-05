@@ -1,0 +1,18 @@
+# Action Recognition Backend - Requirements
+# Python 3.8+ recommended
+
+# Web Framework
+flask>=2.0.0
+flask-cors>=3.0.10
+
+# Machine Learning
+tensorflow>=2.10.0
+numpy>=1.21.0
+
+# Video Processing
+imageio>=2.20.0
+imageio-ffmpeg>=0.4.7
+opencv-python>=4.5.0
+
+# Utilities
+werkzeug>=2.0.0

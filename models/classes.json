@@ -1,0 +1,25 @@
+{
+    "classes": [
+        "basketball",
+        "biking",
+        "diving",
+        "golf_swing",
+        "horse_riding",
+        "soccer_juggling",
+        "swing",
+        "tennis_swing",
+        "trampoline_jumping",
+        "volleyball_spiking",
+        "walking"
+    ],
+    "num_classes": 11,
+    "dataset": "UCF11",
+    "model_info": {
+        "architecture": "CNN + LSTM",
+        "cnn_backbone": "MobileNetV2",
+        "lstm_units": 64,
+        "sequence_length": 20,
+        "input_shape": [20, 224, 224, 3],
+        "pretrained": "ImageNet"
+    }
+}
