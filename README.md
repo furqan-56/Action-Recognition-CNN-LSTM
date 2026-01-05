@@ -361,8 +361,6 @@ This project is developed for educational purposes as part of a Deep Learning co
 
 <div align="center">
 
-**Built with ❤️ using TensorFlow & Flask**
-
 *Deep Learning Assignment - Human Activity Recognition using CNN-LSTM*
 
 </div>
